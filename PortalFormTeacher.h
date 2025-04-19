@@ -10,7 +10,7 @@ namespace StudentManagementSystem {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for PortalFormTeacher
+	/// Summary for MyForm
 	/// </summary>
 	public ref class PortalFormTeacher : public System::Windows::Forms::Form
 	{
@@ -39,7 +39,7 @@ namespace StudentManagementSystem {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -48,11 +48,17 @@ namespace StudentManagementSystem {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"PortalFormTeacher";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->SuspendLayout();
+			// 
+			// PortalFormTeacher
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(836, 567);
+			this->Name = L"PortalFormTeacher";
+			this->Text = L"PortalFormTeacher";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

@@ -1,5 +1,6 @@
 #pragma once
 #include "PortalForm.h"
+#include "PortalFormTeacher.h"
 
 namespace StudentManagementSystem {
 
@@ -149,8 +150,9 @@ namespace StudentManagementSystem {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 30);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::White;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
-			this->ClientSize = System::Drawing::Size(1339, 847);
+			this->ClientSize = System::Drawing::Size(1358, 847);
 			this->ControlBox = false;
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->button3);
@@ -161,6 +163,7 @@ namespace StudentManagementSystem {
 			this->DoubleBuffered = true;
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -169,16 +172,26 @@ namespace StudentManagementSystem {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+#pragma endregion 
+	bool isTeacher = false;
+
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		// Open dashboard form
-		StudentManagementSystem::PortalForm^ Portal = gcnew StudentManagementSystem::PortalForm();
-		Portal->Show();
+		if (button3->BackgroundImage == pictureBox1->Image) {
+			// Open teacher portal
+			StudentManagementSystem::PortalFormTeacher^ teacherPortal = gcnew StudentManagementSystem::PortalFormTeacher();
+			teacherPortal->Show();
+		}
+		else if(button2->BackgroundImage == pictureBox1->Image) {
+			// Open student portal
+			StudentManagementSystem::PortalForm^ studentPortal = gcnew StudentManagementSystem::PortalForm();
+			studentPortal->Show();
+		}
 
-		// Hide current form
+		// Hide the login form
 		this->Hide();
 	}
+
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	button1->FlatAppearance->MouseDownBackColor = Color::Transparent;
 	button1->FlatAppearance->MouseOverBackColor = Color::Transparent;
