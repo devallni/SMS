@@ -1,92 +1,120 @@
+// main.cpp (Admin Section)
 #include <iostream>
 #include <fstream>
-#include <string>
-#include "Student.h"
-#include "Teacher.h"
+#include "Admin.h"
+#include <algorithm>
 using namespace std;
+
+bool isValidEmail(const string& email)
+{   
+    string domain = "@lhr.nu.edu.pk";
+    if (email.size() <= 14) 
+    {
+        return false;  
+    }
+    string emailDomain = email.substr(email.size() - 14); // Extract the last 14 characters from the email
+    if (emailDomain == domain) 
+    {
+        return true;  
+    }
+    else 
+    {
+        return false;  
+    }
+}
+
+
+bool isValidPassword(const string& password) 
+{
+    if (password.length() < 9)
+    {
+        return false;
+    }
+    bool hasLower = false;
+    bool hasUpper = false;
+    bool hasDigit = false;
+    for (int i = 0; i < password.length(); i++) 
+    {
+        char ch = password[i];
+        if (ch >= 'a' && ch <= 'z') 
+        {
+            hasLower = true;
+        }
+        if (ch >= 'A' && ch <= 'Z')
+        {
+            hasUpper = true;
+        }
+        if (ch >= '0' && ch <= '9')
+        {
+            hasDigit = true;
+        }
+    }
+    if (hasLower && hasUpper && hasDigit) 
+    {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
 
 int main() 
 {
-    int capacity = 10;
-    int userCount = 0;
-    UserManagement** users = new UserManagement * [capacity];
+    string adminUsername = "admin";  // Hardcoded admin credentials
+    string adminPassword = "admin123";
 
-    ifstream fin("users.txt");
-    if (!fin) 
-    {
-        cout << "Error opening users.txt file.\n";
-        return 1;
-    }
+    string enteredUsername, enteredPassword;
 
-    string role, username, password;
+    cout << "Enter Admin Username: ";
+    cin >> enteredUsername;
+    cout << "Enter Admin Password: ";
+    cin >> enteredPassword;
 
-    while (getline(fin, role)) 
-    {
-        if (!getline(fin, username))
+    if (enteredUsername == adminUsername && enteredPassword == adminPassword) {
+        cout << "Admin Login Successful!\n";
+
+        Admin admin;
+        string role, username, password;
+
+        while (true) 
         {
-            break;
-        }
-        if (!getline(fin, password))
-        {
-            break;
-        }
+            cout << "\nEnter 'exit' to quit admin panel.\n";
+            cout << "Enter role (student/teacher): ";
+            cin >> role;
+            transform(role.begin(), role.end(), role.begin(), ::tolower);
 
-        if (userCount == capacity) 
-        {
-            capacity *= 2;
-            UserManagement** newUsers = new UserManagement * [capacity];
-            for (int i = 0; i < userCount; i++) 
+            if (role == "exit")
             {
-                newUsers[i] = users[i];
+                break;
             }
-            delete[] users;
-            users = newUsers;
+            else if (role != "student" && role != "teacher") 
+            {
+                cout << "Invalid role. Please enter 'student' or 'teacher'.\n";
+                continue;
+            }
+            cout << "Enter username (email): ";
+            cin >> username;
+            if (!isValidEmail(username)) 
+            {
+                cout << "Invalid email. It must end with '@lhr.nu.edu.pk'.\n";
+                continue;
+            }
+            cout << "Enter password: ";
+            cin >> password;
+            if (!isValidPassword(password))
+            {
+                cout << "Invalid password. Must be at least 9 characters and contain lowercase, uppercase, and a digit.\n";
+                continue;
+            }
+            admin.createAccount(role, username, password);
         }
-
-        // Create user based on role
-        if (role == "student") 
-        {
-            users[userCount++] = new Student(username, password);
-        }
-        else if (role == "teacher") 
-        {
-            users[userCount++] = new Teacher(username, password);
-        }
-        string skipLine;
-        getline(fin, skipLine);
     }
-
-    fin.close();
-    string uname, pass;
-    cout << "Enter Username (email): ";
-    cin >> uname;
-    cout << "Enter Password: ";
-    cin >> pass;
-
-    bool loginSuccess = false;
-
-    for (int i = 0; i < userCount; i++) 
+    else 
     {
-        if (users[i]->getEmail() == uname && users[i]->getPassword() == pass) 
-        {
-            cout << "\nLogin Successful!\n";
-            users[i]->showMenu();
-            loginSuccess = true;
-            break;
-        }
+        cout << "Invalid Admin credentials.\n";
     }
-
-    if (!loginSuccess) 
-    {
-        cout << "\nInvalid credentials.\n";
-    }
-
-    // Free memory
-    for (int i = 0; i < userCount; i++) 
-    {
-        delete users[i];
-    }
-    delete[] users;
 
     return 0;
 }
