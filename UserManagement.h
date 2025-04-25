@@ -1,19 +1,41 @@
+// UserManagement.h
+
 #pragma once
+#include <iostream>
+#include <string>
+using namespace std;
 
-#include "Student.h"
-#include "Teacher.h"
-#include "Admin.h"
-
-ref class UserManagement
-{
+class UserManagement {
+protected:
+    string email; // email
+    string password;
 public:
-    UserManagement() {}
-
-    void loginUser(System::String^ email, System::String^ password) {
-        // dummy login logic
+    // Default constructor
+    UserManagement() {
+        email = "";
+        password = "";
     }
 
-    void createUserAccount() {
-        // dummy logic
+    // Parameterized constructor
+    UserManagement(string _email, string _pass) : email(_email), password(_pass) {}
+    
+    // returns username
+    string getEmail() {
+        return email;
     }
+
+    // returns password
+    string getPassword() {
+        return password;
+    }
+    
+    virtual void showMenu() = 0; // pure virtual function -> must be implemented by child classes
 };
+
+string UserManagement::getEmail() {
+    return email;
+}
+
+string UserManagement::getPassword() {
+    return password;
+}
