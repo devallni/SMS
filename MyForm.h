@@ -226,6 +226,7 @@ namespace StudentManagementSystem {
 			// buttonAdminLogin
 			// 
 			this->buttonAdminLogin->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonAdminLogin.BackgroundImage")));
+			this->buttonAdminLogin->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->buttonAdminLogin->FlatAppearance->BorderSize = 0;
 			this->buttonAdminLogin->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->buttonAdminLogin->Font = (gcnew System::Drawing::Font(L"Segoe UI Black", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
