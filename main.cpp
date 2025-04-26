@@ -27,6 +27,5 @@ int main()
     {
         cout << "Invalid option.\n";
     }
-
     return 0;
 }
