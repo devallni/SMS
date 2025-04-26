@@ -1,37 +1,43 @@
-// Teacher.h
 #pragma once
+#include "Person.h"
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "UserManagement.h"
+
 using namespace std;
 
-class Teacher : public UserManagement {
-    string name;
-    string courseName;
+// Teacher class
+class Teacher : public Person {
+private:
+    int teacherId;
+    string hireDate;
+    string qualification;
+
 public:
-    Teacher() {
-        name = "";
-        courseName = "";
-    }
-    Teacher(string _email, string _pass, string _name, string _courseName) : 
-        UserManagement(_email, _pass), name(_name), courseName(_courseName) { }
+    // Constructor
+    Teacher(int id, const string& name, const string& email, const string& phone,
+            int teacherId, const string& hireDate, const string& qualification)
+        : Person(id, name, email, phone), teacherId(teacherId), hireDate(hireDate), qualification(qualification) {}
 
-    // returns instructor name
-    string getName() {
-        return name;
-    }
-
-    // returns course name
-    string getCourseName() {
-        return courseName;
+    // Save Teacher details to a file
+    void saveToFile(ofstream& outFile) const override {
+        Person::saveToFile(outFile);  // Save Person class details first
+        outFile << teacherId << "\n" << hireDate << "\n" << qualification << "\n";  // Save Teacher-specific details
     }
 
-    void showMenu() override;
+    // Load Teacher details from a file
+    void loadFromFile(ifstream& inFile) override {
+        Person::loadFromFile(inFile);  // Load Person class details first
+        inFile >> teacherId;
+        inFile.ignore();
+        getline(inFile, hireDate);
+        getline(inFile, qualification);
+    }
+
+    // Display Teacher details
+    void display() const override {
+        Person::display();  // Display Person class details first
+        cout << "Teacher ID: " << teacherId << "\nHire Date: " << hireDate 
+             << "\nQualification: " << qualification << "\n";
+    }
 };
-
-void Teacher::showMenu() {
-    cout << "\n--- Teacher Portal ---\n";
-    cout << "1. Post Announcements\n";
-    cout << "2. Add Marks\n";
-    cout << "3. Take Attendance\n";
-}
