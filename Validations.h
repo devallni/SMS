@@ -1,22 +1,52 @@
 #pragma once
+#include "Student.h"
+#include "Admin.h"
+#include "Teacher.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include "Student.h"
-#include "Teacher.h"
-#include "Admin.h"
-
 using namespace std;
+
+void runAdminPanel()
+{
+    string adminUsername = "admin";
+    string adminPassword = "admin123";
+
+    string enteredUsername, enteredPassword;
+
+    cout << "Enter Admin Username: ";
+    cin >> enteredUsername;
+    cout << "Enter Admin Password: ";
+    cin >> enteredPassword;
+
+    if (enteredUsername == adminUsername && enteredPassword == adminPassword)
+    {
+        cout << "Admin Login Successful!\n";
+        Admin admin;
+        int choice;
+        cout << "Press 1 to create an account or any other key to exit: ";
+        cin >> choice;
+
+        if (choice == 1)
+        {
+            admin.createAccount(); // Call the createAccount function
+        }
+    }
+    else
+    {
+        cout << "Invalid Admin credentials.\n";
+    }
+}
+
+// No errors now
 void runUserLogin()
 {
     int capacity = 10;
     int userCount = 0;
-
     Person** users = new Person * [capacity];
 
-    // Reading Students
     ifstream finStudents("students.txt");
     if (!finStudents)
     {
@@ -43,9 +73,7 @@ void runUserLogin()
             capacity *= 2;
             Person** newUsers = new Person * [capacity];
             for (int i = 0; i < userCount; i++)
-            {
                 newUsers[i] = users[i];
-            }
             delete[] users;
             users = newUsers;
         }
@@ -55,7 +83,6 @@ void runUserLogin()
     }
     finStudents.close();
 
-    // Reading Teachers
     ifstream finTeachers("teachers.txt");
     if (!finTeachers)
     {
@@ -82,9 +109,7 @@ void runUserLogin()
             capacity *= 2;
             Person** newUsers = new Person * [capacity];
             for (int i = 0; i < userCount; i++)
-            {
                 newUsers[i] = users[i];
-            }
             delete[] users;
             users = newUsers;
         }
@@ -93,67 +118,4 @@ void runUserLogin()
         users[userCount++] = new Teacher(id, name, email, phone, password, t_id, hireDate, qualification);
     }
     finTeachers.close();
-
-    // Login Part
-    string uname, pass;
-    cout << "Enter Email (Username): ";
-    cin >> uname;
-    cout << "Enter Password (No password checking here because Person class doesn't store password): ";
-    cin >> pass;
-
-    bool loginSuccess = false;
-
-    for (int i = 0; i < userCount; i++)
-    {
-        if (users[i]->getEmail() == uname && users[i]->getPassword() == pass)
-        {
-            cout << "\nLogin Successful!\n";
-            users[i]->display(); // show student or teacher menu
-            loginSuccess = true;
-            break;
-        }
-    }
-    if (!loginSuccess)
-    {
-        cout << "\nInvalid credentials. Try again.\n";
-    }
-
-    // Cleanup
-    for (int i = 0; i < userCount; i++)
-    {
-        delete users[i];
-    }
-    delete[] users;
-}
-
-
-void runAdminPanel()
-{
-    string adminUsername = "admin";
-    string adminPassword = "admin123";
-
-    string enteredUsername, enteredPassword;
-
-    cout << "Enter Admin Username: ";
-    cin >> enteredUsername;
-    cout << "Enter Admin Password: ";
-    cin >> enteredPassword;
-
-    if (enteredUsername == adminUsername && enteredPassword == adminPassword)
-    {
-        cout << "Admin Login Successful!\n";
-        Admin admin;
-        int choice;
-        cout << "Press 1 to create an account or any other key to exit: ";
-        cin >> choice;
-
-        if (choice == 1)
-        {
-            admin.createAccount(); // Call the createAccount function
-        }   
-    }
-    else
-    {
-        cout << "Invalid Admin credentials.\n";
-    }
 }

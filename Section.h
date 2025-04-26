@@ -34,7 +34,7 @@ public:
         course = new Course(0, "", "", 0);
         course->loadFromFile(inFile);
 
-        teacher = new Teacher(0, "", "", "", 0, "", "");
+        teacher = new Teacher(0, "", "", "", "", "", "", "");
         teacher->loadFromFile(inFile);
 
         getline(inFile, semester);

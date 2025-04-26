@@ -1,17 +1,16 @@
-// Admin.h
 #pragma once
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <algorithm>
 using namespace std;
+
 bool isValidEmail(const string& email)
 {
     string domain = "@lhr.nu.edu.pk";
     if (email.size() <= 14)
-    {
         return false;
-    }
+
     string emailDomain = email.substr(email.size() - 14);
     return emailDomain == domain;
 }
@@ -19,9 +18,8 @@ bool isValidEmail(const string& email)
 bool isValidPassword(const string& password)
 {
     if (password.length() < 9)
-    {
         return false;
-    }
+
     bool hasLower = false, hasUpper = false, hasDigit = false;
     for (char ch : password)
     {
@@ -32,7 +30,7 @@ bool isValidPassword(const string& password)
     return hasLower && hasUpper && hasDigit;
 }
 
-class Admin 
+class Admin
 {
 public:
     void createAccount()
@@ -48,9 +46,7 @@ public:
             transform(role.begin(), role.end(), role.begin(), ::tolower);
 
             if (role == "exit")
-            {
                 break;
-            }
             else if (role != "student" && role != "teacher")
             {
                 cout << "Invalid role. Please enter 'student' or 'teacher'.\n";
@@ -86,7 +82,6 @@ public:
             {
                 cout << "Enter Enrollment Date: ";
                 cin >> enrollmentDate;
-
                 ofstream foutStudent("students.txt", ios::app);
                 if (!foutStudent)
                 {
@@ -102,7 +97,6 @@ public:
                 cin >> hireDate;
                 cout << "Enter Qualification: ";
                 cin >> qualification;
-
                 ofstream foutTeacher("teachers.txt", ios::app);
                 if (!foutTeacher)
                 {
@@ -115,6 +109,4 @@ public:
             cout << "Account created successfully!\n";
         }
     }
-
 };
-

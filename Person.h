@@ -1,50 +1,47 @@
 #pragma once
 #include <iostream>
-#include "Student.h"
-#include "Teacher.h"
-#include "Validations.h"
-#include "Admin.h"
+#include <fstream>
+#include <string>
 using namespace std;
-
 
 // Base Person class
 class Person
 {
 protected:
     int id;
-    std::string name;
-    std::string email;
-    std::string phone;
-    std::string password; // <-- New attribute
+    string name;
+    string email;
+    string phone;
+    string password;
 
 public:
-    Person(int id, const std::string& name, const std::string& email, const std::string& phone, const std::string& password)
-        : id(id), name(name), email(email), phone(phone), password(password) {}
+    Person(int id, const string& name, const string& email, const string& phone, const string& password)
+        : id(id), name(name), email(email), phone(phone), password(password) {
+    }
 
     virtual ~Person() {}
 
     int getId() const { return id; }
-    std::string getName() const { return name; }
-    std::string getEmail() const { return email; }
-    std::string getPhone() const { return phone; }
-    std::string getPassword() const { return password; } // <-- New getter
+    string getName() const { return name; }
+    string getEmail() const { return email; }
+    string getPhone() const { return phone; }
+    string getPassword() const { return password; }
 
-    virtual void saveToFile(std::ofstream& outFile) const {
-        outFile << id << "\n" << name << "\n" << email << "\n" << phone << "\n" << password << "\n"; // <-- Save password too
+    virtual void saveToFile(ofstream& outFile) const {
+        outFile << id << "\n" << name << "\n" << email << "\n" << phone << "\n" << password << "\n";
     }
 
-    virtual void loadFromFile(std::ifstream& inFile) {
+    virtual void loadFromFile(ifstream& inFile) {
         inFile >> id;
         inFile.ignore();
-        std::getline(inFile, name);
-        std::getline(inFile, email);
-        std::getline(inFile, phone);
-        std::getline(inFile, password); // <-- Load password too
+        getline(inFile, name);
+        getline(inFile, email);
+        getline(inFile, phone);
+        getline(inFile, password);
     }
 
     virtual void display() const {
-        std::cout << "ID: " << id << "\nName: " << name
+        cout << "ID: " << id << "\nName: " << name
             << "\nEmail: " << email << "\nPhone: " << phone << "\n";
-        // Password is private, not displaying it here
     }
 };

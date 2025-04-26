@@ -26,7 +26,7 @@ public:
         inFile >> recordId;
         inFile.ignore();
         
-        student = new Student(0, "", "", "", 0, "");
+        student = new Student(0, "", "", "", "", "", "");
         student->loadFromFile(inFile);
         
         section = new Section(0, nullptr, nullptr, "", 0);
