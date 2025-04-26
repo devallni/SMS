@@ -9,14 +9,14 @@ using namespace std;
 // Teacher class
 class Teacher : public Person {
 private:
-    int teacherId;
+    string teacherId;
     string hireDate;
     string qualification;
 
 public:
     // Constructor
     Teacher(int id, const string& name, const string& email, const string& phone,const string &pasword,
-            int teacherId, const string& hireDate, const string& qualification)
+            string teacherId, const string& hireDate, const string& qualification)
         : Person(id, name, email, phone , password), teacherId(teacherId), hireDate(hireDate), qualification(qualification) {}
 
     // Save Teacher details to a file

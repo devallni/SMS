@@ -9,12 +9,12 @@ using namespace std;
 // Student class
 class Student : public Person {
 private:
-    int studentId;
+    string studentId;
     string enrollmentDate;
 
 public:
     Student(int id, const string& name, const string& email, const string& phone,
-          const string & password , int studentId, const string& enrollmentDate)
+          const string & password , string studentId, const string& enrollmentDate)
         : Person(id, name, email, phone , password), studentId(studentId), enrollmentDate(enrollmentDate) {}
 
     void saveToFile(ofstream& outFile) const override 
