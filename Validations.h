@@ -28,12 +28,14 @@ void runUserLogin()
     while (getline(finStudents, line))
     {
         stringstream ss(line);
-        string idStr, name, email, phone, enrollmentDate;
+        string idStr, name, email, phone, password, s_id, enrollmentDate;
 
         getline(ss, idStr, ',');
         getline(ss, name, ',');
         getline(ss, email, ',');
         getline(ss, phone, ',');
+        getline(ss, password, ',');
+        getline(ss, s_id, ',');
         getline(ss, enrollmentDate, ',');
 
         if (userCount == capacity)
@@ -49,7 +51,7 @@ void runUserLogin()
         }
 
         int id = stoi(idStr);
-        users[userCount++] = new Student(id, name, email, phone, id, enrollmentDate);
+        users[userCount++] = new Student(id, name, email, phone, password, s_id, enrollmentDate);
     }
     finStudents.close();
 
@@ -64,12 +66,14 @@ void runUserLogin()
     while (getline(finTeachers, line))
     {
         stringstream ss(line);
-        string idStr, name, email, phone, hireDate, qualification;
+        string idStr, name, email, phone, password, t_id, hireDate, qualification;
 
         getline(ss, idStr, ',');
         getline(ss, name, ',');
         getline(ss, email, ',');
         getline(ss, phone, ',');
+        getline(ss, password, ',');
+        getline(ss, t_id, ',');
         getline(ss, hireDate, ',');
         getline(ss, qualification, ',');
 
@@ -86,7 +90,7 @@ void runUserLogin()
         }
 
         int id = stoi(idStr);
-        users[userCount++] = new Teacher(id, name, email, phone, id, hireDate, qualification);
+        users[userCount++] = new Teacher(id, name, email, phone, password, t_id, hireDate, qualification);
     }
     finTeachers.close();
 

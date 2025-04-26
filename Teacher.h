@@ -15,7 +15,7 @@ private:
 
 public:
     // Constructor
-    Teacher(int id, const string& name, const string& email, const string& phone,const string &pasword,
+    Teacher(int id, const string& name, const string& email, const string& phone,const string &password,
             string teacherId, const string& hireDate, const string& qualification)
         : Person(id, name, email, phone , password), teacherId(teacherId), hireDate(hireDate), qualification(qualification) {}
 

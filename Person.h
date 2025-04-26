@@ -1,3 +1,12 @@
+#pragma once
+#include <iostream>
+#include "Student.h"
+#include "Teacher.h"
+#include "Validations.h"
+#include "Admin.h"
+using namespace std;
+
+
 // Base Person class
 class Person
 {
