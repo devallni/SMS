@@ -2,6 +2,7 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 class Admin 
