@@ -14,10 +14,11 @@ private:
 
 public:
     Student(int id, const string& name, const string& email, const string& phone,
-            int studentId, const string& enrollmentDate)
-        : Person(id, name, email, phone), studentId(studentId), enrollmentDate(enrollmentDate) {}
+          const string & password , int studentId, const string& enrollmentDate)
+        : Person(id, name, email, phone , password), studentId(studentId), enrollmentDate(enrollmentDate) {}
 
-    void saveToFile(ofstream& outFile) const override {
+    void saveToFile(ofstream& outFile) const override 
+    {
         Person::saveToFile(outFile);
         outFile << studentId << "\n" << enrollmentDate << "\n";
     }
@@ -29,7 +30,8 @@ public:
         getline(inFile, enrollmentDate);
     }
 
-    void display() const override {
+    void display() const override 
+    {
         Person::display();
         cout << "Student ID: " << studentId << "\nEnrollment Date: " << enrollmentDate << "\n";
     }
