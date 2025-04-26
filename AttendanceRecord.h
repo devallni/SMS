@@ -13,7 +13,8 @@ private:
 
 public:
     AttendanceRecord(int recordId, Student* student, Section* section, const std::string& date, const std::string& status)
-        : recordId(recordId), student(student), section(section), date(date), status(status) {}
+        : recordId(recordId), student(student), section(section), date(date), status(status) {
+    }
 
     void saveToFile(std::ofstream& outFile) const {
         outFile << recordId << "\n";
@@ -25,13 +26,13 @@ public:
     void loadFromFile(std::ifstream& inFile) {
         inFile >> recordId;
         inFile.ignore();
-        
+
         student = new Student(0, "", "", "", "", "", "");
         student->loadFromFile(inFile);
-        
+
         section = new Section(0, nullptr, nullptr, "", 0);
         section->loadFromFile(inFile);
-        
+
         std::getline(inFile, date);
         std::getline(inFile, status);
     }

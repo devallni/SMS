@@ -16,7 +16,8 @@ private:
 
 public:
     Grade(int gradeId, Quiz* quiz, Enrollment* enrollment, int marksObtained)
-        : gradeId(gradeId), quiz(quiz), enrollment(enrollment), marksObtained(marksObtained) {}
+        : gradeId(gradeId), quiz(quiz), enrollment(enrollment), marksObtained(marksObtained) {
+    }
 
     void saveToFile(std::ofstream& outFile) const {
         outFile << gradeId << "\n";
@@ -28,13 +29,13 @@ public:
     void loadFromFile(std::ifstream& inFile) {
         inFile >> gradeId;
         inFile.ignore();
-        
+
         quiz = new Quiz(0, nullptr, "", 0, "");
         quiz->loadFromFile(inFile);
-        
+
         enrollment = new Enrollment(0, nullptr, nullptr, "");
         enrollment->loadFromFile(inFile);
-        
+
         inFile >> marksObtained;
         inFile.ignore();
     }

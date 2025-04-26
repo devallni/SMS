@@ -18,11 +18,11 @@ int main()
     {
         runAdminPanel();
     }
-    else if (choice == 2) 
+    else if (choice == 2)
     {
         runUserLogin();
     }
-    else 
+    else
     {
         cout << "Invalid option.\n";
     }

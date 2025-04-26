@@ -18,7 +18,8 @@ private:
 
 public:
     Section(int sectionId, Course* course, Teacher* teacher, const string& semester, int year)
-        : sectionId(sectionId), course(course), teacher(teacher), semester(semester), year(year) {}
+        : sectionId(sectionId), course(course), teacher(teacher), semester(semester), year(year) {
+    }
 
     void saveToFile(ofstream& outFile) const {
         outFile << sectionId << "\n";

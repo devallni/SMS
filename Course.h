@@ -15,7 +15,8 @@ private:
 
 public:
     Course(int courseId = 0, const string& name = "", const string& description = "", int creditHours = 0)
-        : courseId(courseId), name(name), description(description), creditHours(creditHours) {}
+        : courseId(courseId), name(name), description(description), creditHours(creditHours) {
+    }
 
     void saveToFile(ofstream& outFile) const
     {

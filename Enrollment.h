@@ -17,7 +17,8 @@ private:
 
 public:
     Enrollment(int enrollmentId, Student* student, Section* section, const string& enrollmentDate)
-        : enrollmentId(enrollmentId), student(student), section(section), enrollmentDate(enrollmentDate) {}
+        : enrollmentId(enrollmentId), student(student), section(section), enrollmentDate(enrollmentDate) {
+    }
 
     void saveToFile(ofstream& outFile) const {
         outFile << enrollmentId << "\n";

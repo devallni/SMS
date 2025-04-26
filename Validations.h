@@ -41,81 +41,106 @@ void runAdminPanel()
 }
 
 // No errors now
+bool isStudentEmail(const string& email) {
+    if (email.empty() || (email[0] != 'L' && email[0] != 'l')) {
+        return false;
+    }
+    int i = 1;
+    while (i < email.size() && isdigit(email[i])) {
+        i++;
+    }
+    // After digits, should have @
+    return (i < email.size() && email[i] == '@');
+}
+
 void runUserLogin()
 {
-    int capacity = 10;
-    int userCount = 0;
-    Person** users = new Person * [capacity];
+    string uname, pass;
+    cout << "Enter Email (Username): ";
+    cin >> uname;
+    cout << "Enter Password: ";
+    cin >> pass;
 
-    ifstream finStudents("students.txt");
-    if (!finStudents)
+    bool loginSuccess = false;
+    Person* user = nullptr;
+
+    if (isStudentEmail(uname))
     {
-        cout << "Error opening students.txt file.\n";
-        return;
-    }
-
-    string line;
-    while (getline(finStudents, line))
-    {
-        stringstream ss(line);
-        string idStr, name, email, phone, password, s_id, enrollmentDate;
-
-        getline(ss, idStr, ',');
-        getline(ss, name, ',');
-        getline(ss, email, ',');
-        getline(ss, phone, ',');
-        getline(ss, password, ',');
-        getline(ss, s_id, ',');
-        getline(ss, enrollmentDate, ',');
-
-        if (userCount == capacity)
+        // Student login
+        ifstream finStudents("students.txt");
+        if (!finStudents)
         {
-            capacity *= 2;
-            Person** newUsers = new Person * [capacity];
-            for (int i = 0; i < userCount; i++)
-                newUsers[i] = users[i];
-            delete[] users;
-            users = newUsers;
+            cout << "Error opening students.txt file.\n";
+            return;
         }
 
-        int id = stoi(idStr);
-        users[userCount++] = new Student(id, name, email, phone, password, s_id, enrollmentDate);
-    }
-    finStudents.close();
-
-    ifstream finTeachers("teachers.txt");
-    if (!finTeachers)
-    {
-        cout << "Error opening teachers.txt file.\n";
-        return;
-    }
-
-    while (getline(finTeachers, line))
-    {
-        stringstream ss(line);
-        string idStr, name, email, phone, password, t_id, hireDate, qualification;
-
-        getline(ss, idStr, ',');
-        getline(ss, name, ',');
-        getline(ss, email, ',');
-        getline(ss, phone, ',');
-        getline(ss, password, ',');
-        getline(ss, t_id, ',');
-        getline(ss, hireDate, ',');
-        getline(ss, qualification, ',');
-
-        if (userCount == capacity)
+        string line;
+        while (getline(finStudents, line))
         {
-            capacity *= 2;
-            Person** newUsers = new Person * [capacity];
-            for (int i = 0; i < userCount; i++)
-                newUsers[i] = users[i];
-            delete[] users;
-            users = newUsers;
+            stringstream ss(line);
+            string idStr, name, email, phone, password, s_id, enrollmentDate;
+
+            getline(ss, idStr, ',');
+            getline(ss, name, ',');
+            getline(ss, email, ',');
+            getline(ss, phone, ',');
+            getline(ss, password, ',');
+            getline(ss, enrollmentDate);
+            s_id = "l" + string(1, enrollmentDate[2]) + string(1, enrollmentDate[3]) + idStr;
+
+            if (email == uname && password == pass)
+            {
+                int id = stoi(idStr);
+                user = new Student(id, name, email, phone, password, s_id, enrollmentDate);
+                loginSuccess = true;
+                break;
+            }
+        }
+        finStudents.close();
+    }
+    else
+    {
+        // Teacher login
+        ifstream finTeachers("teachers.txt");
+        if (!finTeachers)
+        {
+            cout << "Error opening teachers.txt file.\n";
+            return;
         }
 
-        int id = stoi(idStr);
-        users[userCount++] = new Teacher(id, name, email, phone, password, t_id, hireDate, qualification);
+        string line;
+        while (getline(finTeachers, line))
+        {
+            stringstream ss(line);
+            string idStr, name, email, phone, password, hireDate, qualification;
+
+            getline(ss, idStr, ',');
+            getline(ss, name, ',');
+            getline(ss, email, ',');
+            getline(ss, phone, ',');
+            getline(ss, password, ',');
+            getline(ss, hireDate, ',');
+            getline(ss, qualification);
+
+            if (email == uname && password == pass)
+            {
+                int id = stoi(idStr);
+                user = new Teacher(id, name, email, phone, password, name, hireDate, qualification);
+                loginSuccess = true;
+                break;
+            }
+        }
+        finTeachers.close();
     }
-    finTeachers.close();
+
+    if (loginSuccess && user != nullptr)
+    {
+        cout << "\nLogin Successful!\n";
+        user->display();
+        delete user;
+    }
+    else
+    {
+        cout << "\nInvalid credentials. Try again.\n";
+    }
 }
