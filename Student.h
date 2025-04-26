@@ -1,31 +1,36 @@
-// Student.h
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "UserManagement.h"
+#include "Person.h"
+
 using namespace std;
 
-class Student : public UserManagement {
-    string roleNumber;
+// Student class
+class Student : public Person {
+private:
+    int studentId;
+    string enrollmentDate;
+
 public:
-    Student() {
-        roleNumber = "";
-    }
-    
-    Student(string _email, string _pass, string _roleNumber) :
-        UserManagement(_email, _pass), roleNumber(_roleNumber) {}
-    
-    // returns username
-    string getRoleNumber() {
-        return roleNumber;
+    Student(int id, const string& name, const string& email, const string& phone,
+            int studentId, const string& enrollmentDate)
+        : Person(id, name, email, phone), studentId(studentId), enrollmentDate(enrollmentDate) {}
+
+    void saveToFile(ofstream& outFile) const override {
+        Person::saveToFile(outFile);
+        outFile << studentId << "\n" << enrollmentDate << "\n";
     }
 
-    void showMenu() override; // Must override User's pure virtual function
+    void loadFromFile(ifstream& inFile) override {
+        Person::loadFromFile(inFile);
+        inFile >> studentId;
+        inFile.ignore();
+        getline(inFile, enrollmentDate);
+    }
+
+    void display() const override {
+        Person::display();
+        cout << "Student ID: " << studentId << "\nEnrollment Date: " << enrollmentDate << "\n";
+    }
 };
-
-void Student::showMenu() {
-    cout << "\n--- Student Portal ---\n";
-    cout << "1. View Transcript\n";
-    cout << "2. View Attendance\n";
-    cout << "3. View Announcements\n";
-}
